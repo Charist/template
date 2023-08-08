@@ -4,3 +4,6 @@
 [submodule "3rdparty/spdlog"]
 	path = 3rdparty/spdlog
 	url = https://github.com/gabime/spdlog.git
+[submodule "3rdparty/soci"]
+	path = 3rdparty/soci
+	url = https://github.com/SOCI/soci.git
