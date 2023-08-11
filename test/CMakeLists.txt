@@ -2,8 +2,8 @@ cmake_minimum_required(VERSION 3.10)
 
 # Set the project name
 set(PROJECT unit_tests)
-# project (test)
-MESSAGE(STATUS "test GTEST_PATH: ${GTEST_PATH}")
+
+MESSAGE(STATUS "test GTEST_PATH: ${GTEST_PATH}") #不能引用3rdparty中定义的变量
 
 #############################################
 # Unit tests

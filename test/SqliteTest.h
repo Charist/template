@@ -1,6 +1,7 @@
 #pragma once
 
 #include <gtest/gtest.h>
+class sqlite3;
 class SqliteTest : public testing::Test
 {
 public:
@@ -13,5 +14,10 @@ protected:
     virtual void SetUp() override;
     // 测试用例层面事件：运行每个测试用例之后执行。
     virtual void TearDown() override;
+
+
+    static void CheckResult(int result);
+protected:
+    static sqlite3* m_pDb;
 };
 

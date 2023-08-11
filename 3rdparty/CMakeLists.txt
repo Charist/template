@@ -54,3 +54,32 @@ set_target_properties(sqlite3 PROPERTIES
     IMPORTED_LOCATION_RELEASE "${3RDPARTY_LIB_PATH}/release/sqlite3.lib"
 )
 
+
+#rttr
+# add_library(rttr_core SHARED IMPORTED GLOBAL)
+# set_target_properties(rttr_core PROPERTIES
+#     INTERFACE_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}/soci/include" 
+#     IMPORTED_LOCATION_DEBUG "${3RDPARTY_LIB_PATH}/lib/debug/rttr_core_d.lib"
+#     IMPORTED_LOCATION_RELEASE "${3RDPARTY_LIB_PATH}/lib/release/rttr_core.lib"
+# )
+
+
+#soci
+# add shared lib:
+# add_library(soci_core SHARED  IMPORTED GLOBAL)
+# set_property(TARGET soci_core PROPERTY IMPORTED_LOCATION "${PROJECT_ROOT_PATH}/bin/x64/Debug/soci_core_4_1.dll")
+# set_property(TARGET soci_core PROPERTY IMPORTED_IMPLIB "${3RDPARTY_LIB_PATH}/release/soci_core_4_1.lib") 
+
+add_library(soci_core STATIC  IMPORTED GLOBAL)
+set_target_properties(soci_core PROPERTIES
+    INTERFACE_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}/soci/include" 
+    IMPORTED_LOCATION_DEBUG "${3RDPARTY_LIB_PATH}/debug/soci_core_4_1.lib"
+    IMPORTED_LOCATION_RELEASE "${3RDPARTY_LIB_PATH}/release/soci_core_4_1.lib"
+)
+
+add_library(soci_sqlite3 STATIC IMPORTED GLOBAL)
+set_target_properties(soci_sqlite3 PROPERTIES
+    INTERFACE_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}/soci/include;${3RDPARTY_PATH}/sqlite3" 
+    IMPORTED_LOCATION_DEBUG "${3RDPARTY_LIB_PATH}/debug/soci_sqlite3_4_1.lib"
+    IMPORTED_LOCATION_RELEASE "${3RDPARTY_LIB_PATH}/debug/soci_sqlite3_4_1.lib"
+)
