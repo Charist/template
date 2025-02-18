@@ -56,12 +56,12 @@ set_target_properties(sqlite3 PROPERTIES
 
 
 #rttr
-# add_library(rttr_core SHARED IMPORTED GLOBAL)
-# set_target_properties(rttr_core PROPERTIES
-#     INTERFACE_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}/soci/include" 
-#     IMPORTED_LOCATION_DEBUG "${3RDPARTY_LIB_PATH}/lib/debug/rttr_core_d.lib"
-#     IMPORTED_LOCATION_RELEASE "${3RDPARTY_LIB_PATH}/lib/release/rttr_core.lib"
-# )
+add_library(rttr_core STATIC IMPORTED GLOBAL)
+set_target_properties(rttr_core PROPERTIES
+    INTERFACE_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}/rttr/src" 
+    IMPORTED_LOCATION_DEBUG "${3RDPARTY_LIB_PATH}/debug/rttr_core_d.lib"
+    IMPORTED_LOCATION_RELEASE "${3RDPARTY_LIB_PATH}/release/rttr_core.lib"
+)
 
 
 #soci
