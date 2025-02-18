@@ -64,13 +64,8 @@ set_target_properties(sqlite3 PROPERTIES
 ### 2.4 gtest 帮助
 [googltest help](https://google.github.io/googletest/primer.html)
 
-## 3. rttr
+## 3. soci
 ### 3.1 库编译
-### 3.2 引用库的 cmake 配置
-### 3.2 rttr 库使用
-
-## 4. soci
-### 4.1 库编译
 参考 `soci\docs\installation.md`、 `soci\scripts\build.bat`相关信息，编译出支持sqlite3 的版本：
 
 ```
@@ -80,9 +75,9 @@ cmake . -G "Visual Studio 16 2019" -B build -DWITH_SQLITE3=ON -DSQLITE3_INCLUDE_
 编译出来的lib库 debug、release 是一样的；dll 库debug、release不一样。默认构建出来的为**动态库**。将`soci_core_4_1.lib`、`soci_sqlite3_4_1.lib` 库拷贝至主目录lib文件夹下；将dll拷贝至主目录bin目录下。
 拷贝`soci\build\include\soci\soci-config.h` 文件到 `soci\include\soci\soci-config.h`，此文件会在头文件中被引用到。
 
-扩展：
 
-### 4.2 引用库的 cmake 配置
+
+### 3.2 引用库的 cmake 配置
 3rdparty 的cmake中，添加相关进行配置：
 扩展下：
 `add_library`库的类型是STATIC(静态库)/SHARED(动态库)/MODULE(模块库)之一。
@@ -105,11 +100,41 @@ set_property(TARGET soci_core PROPERTY IMPORTED_IMPLIB "${3RDPARTY_LIB_PATH}/rel
 ```
 发现虽然soci是动态库，但两种引入库的方式对vs生成的工程没有啥差异，使用对应动态库，windows平台下 cmake引入的话都可以静态库方式添加(`add_library`),linux下貌似也无差异(FA软件中common组件linux也是编译过的)
 
-### 4.2 soci 库使用
+### 3.3 soci 库使用
 ```
 target_link_libraries(${PROJECT} 
     soci_core 
     soci_sqlite3)
+```
+[参考]（https://soci.sourceforge.net/）
+
+## 4. rttr
+### 4.1 库编译
+```
+cmake . -G "Visual Studio 16 2019" -B build
+
+```
+默认编译出动态库`rttr_core`。
+
+编译会在build目录下生产`build/src/rttr/detail/base/version.h`, 需拷贝此文件至源码`src`中,方便cmake中 `include_directories` 不用添加build的临时路径。
+
+### 4.2 引用库的 cmake 配置
+同soci库一样，3rdparty/Cmakelists.txt 中 add_library 静态库方式引入。
+
+```
+add_library(rttr_core STATIC IMPORTED GLOBAL)
+set_target_properties(rttr_core PROPERTIES
+    INTERFACE_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}/rttr/src" 
+    IMPORTED_LOCATION_DEBUG "${3RDPARTY_LIB_PATH}/lib/debug/rttr_core_d.lib"
+    IMPORTED_LOCATION_RELEASE "${3RDPARTY_LIB_PATH}/lib/release/rttr_core.lib"
+)
+
+```
+
+### 4.2 rttr 库使用
+```
+target_link_libraries(${PROJECT} 
+    rttr_core )
 ```
 
 
