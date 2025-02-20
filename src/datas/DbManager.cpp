@@ -1,12 +1,16 @@
+#include "soci/soci.h"
+#include "soci/sqlite3/soci-sqlite3.h"
+
 #include "DbManager.h"
-#include <soci/soci.h>
-#include <soci/sqlite3/soci-sqlite3.h>
+#include "DbManagerImp.h"
+
+#include "model/DbTestModel.h"
 
 using namespace soci;
 
 DbManager::DbManager()
 {
-
+    m_pImp = std::make_shared<DbManagerImp>();
 }
 
 DbManager::~DbManager()
@@ -43,6 +47,8 @@ std::int64_t DbManager::insert(DbModel *pData)
 int main(int argc, char* argv[])
 {    
     DbManager b;
-    b.insert(nullptr);
+    //b.insert(nullptr);
+    b.createTable<DbTestModel>();
+
     return 0;
 }
