@@ -18,37 +18,20 @@ DbManager::~DbManager()
 
 }
 
-std::int64_t DbManager::insert(DbModel *pData)
+std::int64_t DbManager::insert(std::shared_ptr<DbModel> pData)
 {
-    soci::backend_factory const &backEnd = *soci::factory_sqlite3();
-    soci::session sql(backEnd, "1.db");
-
-    sql << "create table test1 ("
-           "    id integer,"
-           "    name varchar(100)"
-           ")";
-
-    sql << "insert into test1(id, name) values(7, \'John\')";
-
-    rowid rid(sql);
-    sql << "select oid from test1 where id = 7", into(rid);
-
-    int id;
-    std::string name;
-
-    sql << "select id, name from test1 where oid = :rid",
-        into(id), into(name), use(rid);
-
-    sql << "drop table test1";
-    return 0;
+    return m_pImp->insert(pData);
 }
-
 
 int main(int argc, char* argv[])
 {    
     DbManager b;
-    //b.insert(nullptr);
-    b.createTable<DbTestModel>();
+    //b.createTable<DbTestModel>();
 
+    std::shared_ptr<DbTestModel> a1 = std::make_shared<DbTestModel>(2, "wwwa1");
+    b.insert(a1);
+
+    std::vector<DbTestModel> ret;
+    b.selectAll<DbTestModel>(ret);
     return 0;
 }

@@ -15,7 +15,10 @@ public:
     template <class T> 
     bool createTable();
 
-    std::int64_t insert(DbModel* pData);
+    template <class T>
+    void selectAll(std::vector<T>& ret);
+
+    std::int64_t insert(std::shared_ptr<DbModel>);
 
 private:
     std::shared_ptr<DbManagerImp> m_pImp;
@@ -25,6 +28,10 @@ private:
 template <class T>
 bool DbManager::createTable()
 {
-    m_pImp->createTable<T>();
-    return false;
+    return m_pImp->createTable<T>();
+}
+template <class T>
+void DbManager::selectAll(std::vector<T>& ret)
+{
+    m_pImp->selectAll<T>(ret);
 }
